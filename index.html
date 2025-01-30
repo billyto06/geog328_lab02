@@ -48,27 +48,74 @@
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
         }
-        img {
-            width: 100%;
-            border-radius: 10px;
+        .slideshow-container {
+            max-width: 1000px;
+            position: relative;
+            margin: auto;
         }
-        .content {
+        .mySlides {
             display: none;
         }
-        .content.active {
-            display: block;
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+        .active, .dot:hover {
+            background-color: #717171;
         }
     </style>
     <script>
-        function showSection(sectionId) {
-            let sections = document.querySelectorAll('.content');
-            sections.forEach(section => section.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
-            
-            let links = document.querySelectorAll('nav a');
-            links.forEach(link => link.classList.remove('active'));
-            document.querySelector(`[href='#${sectionId}']`).classList.add('active');
+        let slideIndex = 1;
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
         }
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {slideIndex = 1}    
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";  
+            dots[slideIndex-1].className += " active";
+        }
+        document.addEventListener("DOMContentLoaded", function() {
+            showSlides(slideIndex);
+        });
     </script>
 </head>
 <body>
@@ -82,29 +129,24 @@
     </nav>
     <div class="container">
         <div id="home" class="content active">
-            <img src="MtRainier.jpg" alt="Beautiful Mount Rainier">
-            <p>Mount Rainier is an iconic mountain located in Washington State, USA. Standing at 14,411 feet (4,392 meters), it is the highest peak in 
-                the Cascade Range and serves as a stunning backdrop to the Seattle-Tacoma area. The mountain's glaciers provide water to the region, 
-                supporting both wildlife and human communities. Its striking appearance has made it a significant landmark for explorers, nature lovers, 
-                and scientists studying its geological activity.</p>
+            <div class="slideshow-container">
+                <div class="mySlides"><img src="home1.jpg" style="width:100%"></div>
+                <div class="mySlides"><img src="home2.jpg" style="width:100%"></div>
+                <div class="mySlides"><img src="home3.jpg" style="width:100%"></div>
+                <a class="prev" onclick="plusSlides(-1)">❮</a>
+                <a class="next" onclick="plusSlides(1)">❯</a>
+            </div>
+            <p>Mount Rainier is an iconic mountain located in Washington State...</p>
         </div>
         <div id="geology" class="content">
-            <h2>Geology and Formation</h2>
-            <p>Mount Rainier is an active stratovolcano formed through repeated eruptions of andesitic lava. It has over 26 major glaciers, making it one of the most heavily glaciated peaks in the contiguous United States. The mountain's volcanic activity has shaped its rugged terrain, creating deep valleys, ridges, and river basins. Geologists closely monitor Rainier for potential future eruptions, as it poses a significant threat due to its proximity to densely populated areas.</p>
-        </div>
-        <div id="flora" class="content">
-            <h2>Flora and Fauna</h2>
-            <p>Mount Rainier National Park is home to a diverse range of plant and animal species. The lower elevations feature temperate rainforests with towering Douglas fir, western hemlock, and red cedar trees. Wildflower meadows bloom in mid-summer, including species like lupine, Indian paintbrush, and avalanche lilies.</p>
-            <p>Wildlife in the region includes black bears, elk, and mountain goats. Black bears are commonly seen foraging for berries and insects, while elk migrate through the valleys in herds. Mountain goats, adapted to the rocky cliffs, are skilled climbers often spotted on steep slopes. Smaller species like marmots, pikas, and foxes also inhabit the alpine regions.</p>
-        </div>
-        <div id="glaciers" class="content">
-            <h2>Glaciers</h2>
-            <p>Mount Rainier is home to some of the largest glaciers in the continental United States. The Emmons Glacier, covering approximately 4.3 square miles, is the largest by area. The Carbon Glacier, on the other hand, is the thickest glacier in the U.S. at 700 feet deep. These glaciers play a crucial role in regulating water flow to surrounding rivers, which provide fresh water for both wildlife and human use. Climate change has led to significant glacial retreat in recent decades, raising concerns about future water availability.</p>
-        </div>
-        <div id="recreation" class="content">
-            <h2>Recreational Opportunities</h2>
-            <p>Mount Rainier National Park offers a variety of outdoor activities for adventurers. Hiking trails range from short scenic walks to strenuous backcountry routes. The Wonderland Trail, a 93-mile loop around the mountain, provides breathtaking views of glaciers, waterfalls, and alpine meadows.</p>
-            <p>Climbing Mount Rainier is a challenging endeavor that attracts thousands of climbers each year. Due to unpredictable weather and crevasse hazards, summiting requires proper gear and mountaineering experience. In winter, the park offers skiing, snowshoeing, and ice climbing opportunities.</p>
+            <div class="slideshow-container">
+                <div class="mySlides"><img src="geology1.jpg" style="width:100%"></div>
+                <div class="mySlides"><img src="geology2.jpg" style="width:100%"></div>
+                <div class="mySlides"><img src="geology3.jpg" style="width:100%"></div>
+                <a class="prev" onclick="plusSlides(-1)">❮</a>
+                <a class="next" onclick="plusSlides(1)">❯</a>
+            </div>
+            <p>Mount Rainier is an active stratovolcano formed through repeated eruptions...</p>
         </div>
     </div>
 </body>
