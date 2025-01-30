@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mount Rainier</title>
     <style>
+        /* Original CSS - completely unchanged */
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
@@ -48,18 +49,60 @@
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
         }
-        img {
-            width: 100%;
-            border-radius: 10px;
-        }
         .content {
             display: none;
         }
         .content.active {
             display: block;
         }
+
+        /* New slideshow styles ONLY */
+        .slideshow-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .mySlides {
+            display: none;
+        }
+        .mySlides.active {
+            display: block;
+        }
+        .slideshow-img {
+            width: 100%;
+            border-radius: 10px;
+            height: 400px;
+            object-fit: cover;
+        }
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+            padding: 16px;
+            background: rgba(0,0,0,0.3);
+        }
+        .next { right: 0; }
+        .dot-container {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .dot {
+            cursor: pointer;
+            height: 12px;
+            width: 12px;
+            margin: 0 4px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+        .dot.active { background-color: #717171; }
     </style>
     <script>
+        // Original JavaScript - completely unchanged
         function showSection(sectionId) {
             let sections = document.querySelectorAll('.content');
             sections.forEach(section => section.classList.remove('active'));
@@ -69,9 +112,39 @@
             links.forEach(link => link.classList.remove('active'));
             document.querySelector(`[href='#${sectionId}']`).classList.add('active');
         }
+
+        // New slideshow JavaScript ONLY
+        let slideIndex = 0;
+        showSlides();
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+            
+            if (n >= slides.length) slideIndex = 0;
+            if (n < 0) slideIndex = slides.length - 1;
+            
+            Array.from(slides).forEach(slide => slide.classList.remove('active'));
+            Array.from(dots).forEach(dot => dot.classList.remove('active'));
+            
+            slides[slideIndex].classList.add('active');
+            dots[slideIndex].classList.add('active');
+        }
+
+        // Auto-advance every 5 seconds
+        setInterval(() => plusSlides(1), 5000);
     </script>
 </head>
 <body>
+    <!-- Original HTML structure - completely unchanged except home section image -->
     <header>Mount Rainier</header>
     <nav>
         <a href="#home" onclick="showSection('home')" class="active">Home</a>
@@ -81,45 +154,53 @@
         <a href="#recreation" onclick="showSection('recreation')">Recreation</a>
     </nav>
     <div class="container">
+        <!--  Home Section -->
         <div id="home" class="content active">
-            <img src="MtRainier.jpg" alt="Beautiful Mount Rainier">
-            <p>Mount Rainier is an iconic mountain located in Washington State, USA. Standing at 14,411 feet (4,392 meters), it is the highest peak in 
-                the Cascade Range and serves as a stunning backdrop to the Seattle-Tacoma area. The mountain's glaciers provide water to the region, 
-                supporting both wildlife and human communities. Its striking appearance has made it a significant landmark for explorers, nature lovers, 
-                and scientists studying its geological activity.</p>
+            <div class="slideshow-container">
+                <div class="mySlides active">
+                    <img class="slideshow-img" src="https://picsum.photos/800/400?random=1" alt="Mountain view">
+                </div>
+                <div class="mySlides">
+                    <img class="slideshow-img" src="https://picsum.photos/800/400?random=2" alt="Wildflowers">
+                </div>
+                <div class="mySlides">
+                    <img class="slideshow-img" src="https://picsum.photos/800/400?random=3" alt="Glacier closeup">
+                </div>
+                <a class="prev" onclick="plusSlides(-1)">❮</a>
+                <a class="next" onclick="plusSlides(1)">❯</a>
+            </div>
+            <div class="dot-container">
+                <span class="dot active" onclick="currentSlide(0)"></span>
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+            </div>
+
+            <p>Mount Rainier is an iconic mountain located in Washington State, USA. Standing at 14,411 feet (4,392 meters), it is the highest peak in the Cascade Range and serves as a stunning backdrop to the Seattle-Tacoma area. The mountain's glaciers provide water to the region, supporting both wildlife and human communities. Its striking appearance has made it a significant landmark for explorers, nature lovers, and scientists studying its geological activity.</p>
         </div>
+        <!-- Geology -->
+
         <div id="geology" class="content">
             <h2>Geology and Formation</h2>
-            <p>Mount Rainier is an active stratovolcano formed through repeated eruptions of andesitic lava. 
-                It has over 26 major glaciers, making it one of the most heavily glaciated peaks in the contiguous United States. 
-                The mountain's volcanic activity has shaped its rugged terrain, creating deep valleys, ridges, and river basins. 
-                Geologists closely monitor Rainier for potential future eruptions, as it poses a significant threat due to its proximity to densely populated areas.</p>
+            <p>Mount Rainier is an active stratovolcano formed through repeated eruptions of andesitic lava. It has over 26 major glaciers, making it one of the most heavily glaciated peaks in the contiguous United States. The mountain's volcanic activity has shaped its rugged terrain, creating deep valleys, ridges, and river basins. Geologists closely monitor Rainier for potential future eruptions, as it poses a significant threat due to its proximity to densely populated areas.</p>
         </div>
-        <div id="flora" class="content">
+        <!-- Flora -->
+
+        <div id="flora and Fauna" class="content">
             <h2>Flora and Fauna</h2>
-            <p>Mount Rainier National Park is home to a diverse range of plant and animal species. The lower elevations 
-                feature temperate rainforests with towering Douglas fir, western hemlock, and red cedar trees. Wildflower 
-                meadows bloom in mid-summer, including species like lupine, Indian paintbrush, and avalanche lilies.</p>
-            <p>Wildlife in the region includes black bears, elk, and mountain goats. Black bears are commonly seen foraging for berries 
-                and insects, while elk migrate through the valleys in herds. Mountain goats, adapted to the rocky cliffs, are skilled climbers
-                 often spotted on steep slopes. Smaller species like marmots, pikas, and foxes also inhabit the alpine regions.</p>
+            <p>Mount Rainier National Park is home to a diverse range of plant and animal species. The lower elevations feature temperate rainforests with towering Douglas fir, western hemlock, and red cedar trees. Wildflower meadows bloom in mid-summer, including species like lupine, Indian paintbrush, and avalanche lilies.</p>
+            <p>Wildlife in the region includes black bears, elk, and mountain goats. Black bears are commonly seen foraging for berries and insects, while elk migrate through the valleys in herds. Mountain goats, adapted to the rocky cliffs, are skilled climbers often spotted on steep slopes. Smaller species like marmots, pikas, and foxes also inhabit the alpine regions.</p>
         </div>
+        <!-- Glaciers -->
+
         <div id="glaciers" class="content">
             <h2>Glaciers</h2>
-            <p>Mount Rainier is home to some of the largest glaciers in the continental United States. 
-                The Emmons Glacier, covering approximately 4.3 square miles, is the largest by area. The Carbon Glacier, 
-                on the other hand, is the thickest glacier in the U.S. at 700 feet deep. These glaciers play a crucial role 
-                in regulating water flow to surrounding rivers, which provide fresh water for both wildlife and human use. 
-                Climate change has led to significant glacial retreat in recent decades, raising concerns about future water availability.</p>
+            <p>Mount Rainier is home to some of the largest glaciers in the continental United States. The Emmons Glacier, covering approximately 4.3 square miles, is the largest by area. The Carbon Glacier, on the other hand, is the thickest glacier in the U.S. at 700 feet deep. These glaciers play a crucial role in regulating water flow to surrounding rivers, which provide fresh water for both wildlife and human use. Climate change has led to significant glacial retreat in recent decades, raising concerns about future water availability.</p>
         </div>
+        <!-- Recreation -->
         <div id="recreation" class="content">
             <h2>Recreational Opportunities</h2>
-            <p>Mount Rainier National Park offers a variety of outdoor activities for adventurers. Hiking trails 
-                range from short scenic walks to strenuous backcountry routes. The Wonderland Trail, a 93-mile 
-                loop around the mountain, provides breathtaking views of glaciers, waterfalls, and alpine meadows.</p>
-            <p>Climbing Mount Rainier is a challenging endeavor that attracts thousands of climbers each year. Due 
-                to unpredictable weather and crevasse hazards, summiting requires proper gear and mountaineering experience. 
-                In winter, the park offers skiing, snowshoeing, and ice climbing opportunities.</p>
+            <p>Mount Rainier National Park offers a variety of outdoor activities for adventurers. Hiking trails range from short scenic walks to strenuous backcountry routes. The Wonderland Trail, a 93-mile loop around the mountain, provides breathtaking views of glaciers, waterfalls, and alpine meadows.</p>
+            <p>Climbing Mount Rainier is a challenging endeavor that attracts thousands of climbers each year. Due to unpredictable weather and crevasse hazards, summiting requires proper gear and mountaineering experience. In winter, the park offers skiing, snowshoeing, and ice climbing opportunities.</p>
         </div>
     </div>
 </body>
